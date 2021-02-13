@@ -1,0 +1,16 @@
+# podman run --name mysqldb -d -v /var/local/mysql:/var/lib/mysql/data -p 13306:3306 
+-e MYSQL_USER=kmash -e MYSQL_PASSWORD=kmashpass -e MYSQL_DATABASE=employees -e MYSQL_ROOT_PASSWORD=rootpass 
+rhscl/mysql-57-rhel7
+
+Testing
+1) Connecting via container exec:
+# podman exec -it mysqldb /opt/rh/rh-mysql57/root/usr/bin/mysql -uroot employee -e "SELECT * FROM employee"
+
+2) Using port forwarding:
+ # mysql -uuser1 -h 127.0.0.1 -pkmashpass -P13306 employees -e "SELECT * FROM employee"
+ 
+ 3) From within the container:
+ # podman exec -it mysqldb /bin/bash
+   bash-4.2$ mysql -uroot employees -e "SELECT * FROM employee"
+   
+   
